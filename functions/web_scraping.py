@@ -1,11 +1,13 @@
 import requests
 from bs4 import BeautifulSoup
+from tqdm import tqdm
 
 
 def main_artist_page(artist):
     # faz a requisição na página
     req_get = requests.get(f'https://www.vagalume.com.br/{artist.replace(" ", "-").lower()}/')
 
+    # Verifica se o status code é 200
     if req_get.status_code == 200:
         try:
             # Cria o obj python do corpo html recebido com o beautifulsoup
@@ -21,17 +23,22 @@ def main_artist_page(artist):
 
     # Se caso o artista não for encontrado retorna uma lsita vazia
     print(f'Nenhum item encontrado ! {artist}')
+    # retorna uma lista vazia
     return []
 
 
 def searching_lyrics(artist):
     data_page_artist = main_artist_page(artist)
 
-    if data_page_artist:
-        for item in data_page_artist:
-            print(item.text, 'https://www.vagalume.com.br' + item.attrs['href'])
+    # for item in tqdm(data_page_artist, desc='Pesquisando musicas'):
+    for item in data_page_artist:
+        link_lyric = 'https://www.vagalume.com.br' + item.attrs['href']
+
+        req_get = requests.get(link_lyric)
+        soup_lyric = BeautifulSoup(req_get.content, 'html.parser')
+        print(item.text, link_lyric)
+        print(soup_lyric.find(id='lyrics'))
 
 
 if __name__ == '__main__':
-
-    searching_lyrics('')
+    searching_lyrics('raul seixas')

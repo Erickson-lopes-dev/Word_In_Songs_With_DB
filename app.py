@@ -1,10 +1,6 @@
-from functions.web_scraping import main_artist_page
+from functions.web_scraping import searching_lyrics
 
 artist = input('Digite o artista/banda: ')
 
-data_page_artist = main_artist_page(artist)
 
-if data_page_artist:
-    print(data_page_artist)
-else:
-    print('404')
+searching_lyrics(artist)
