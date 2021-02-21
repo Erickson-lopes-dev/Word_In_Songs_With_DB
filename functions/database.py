@@ -33,7 +33,7 @@ class DataBase:
                         name text,
                         lyric text,
                         id_artist integer,
-                        FOREIGN KEY (name) REFERENCES artist (id_artist)
+                        FOREIGN KEY (id_artist) REFERENCES artist (name)
                         );
                     ''')
                 # fecha conexão
@@ -46,13 +46,16 @@ class DataBase:
             else:
                 print(Fore.GREEN + '[!] Banco de dados Criado com sucesso!')
 
-    def search_artist(self, artist):
+    # Verifica se o nome do artista
+    def search_artist_db(self, artist):
         conn = sqlite3.connect(self.name_file)
         cursor = conn.cursor()
-        cursor.execute(f"SELECT * FROM artist WHERE name = '{artist}'")
+        cursor.execute(f"SELECT * FROM artist WHERE name = '{artist.lower()}'")
         return cursor.fetchall()
+
+        # cursor.execute(f"INSERT INTO artist (name) VALUES ('{artist.lower()}')")
 
 
 if __name__ == '__main__':
-    DataBase()
-    # print(db.search_artist('Nirvana'))
+    db = DataBase()
+    print(db.search_artist_db('glovis'))

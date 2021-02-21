@@ -1,6 +1,7 @@
-from functions.web_scraping import searching_lyrics
+from functions.database import DataBase
 
-artist = input('Digite o artista/banda: ')
+artist = input('Digite o artista/banda: ').lower()
 
+db = DataBase()
+print(db.search_artist_db(artist))
 
-searching_lyrics(artist)
