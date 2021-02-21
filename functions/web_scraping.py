@@ -1,6 +1,6 @@
+import string
 import requests
 from bs4 import BeautifulSoup
-from tqdm import tqdm
 
 
 def main_artist_page(artist):
@@ -37,8 +37,15 @@ def searching_lyrics(artist):
         req_get = requests.get(link_lyric)
         soup_lyric = BeautifulSoup(req_get.content, 'html.parser')
         print(item.text, link_lyric)
-        print(soup_lyric.find(id='lyrics'))
+        lyric_no_format = soup_lyric.find(id='lyrics').contents
+
+        lyric_format = []
+
+        for teste in lyric_no_format:
+            if str(teste) != '<br/>':
+                print(str(teste))
+        print('\n')
 
 
 if __name__ == '__main__':
-    searching_lyrics('raul seixas')
+    searching_lyrics('raul')
