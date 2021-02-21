@@ -22,7 +22,17 @@ class DataBase:
                 cursor.execute('''
                     CREATE TABLE IF NOT EXISTS artist( 
                         id integer primary key,
-                        artist text)
+                        name text
+                        );
+                    ''')
+                cursor.execute('''
+                    CREATE TABLE IF NOT EXISTS lyrics(
+                        id integer primary key,
+                        name text,
+                        lyric text,
+                        artist integer,
+                        FOREIGN KEY (artist) REFERENCES artist (artisti_id)
+                        );
                     ''')
                 # fecha conexão
                 conn.close()

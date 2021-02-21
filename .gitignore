@@ -2,3 +2,4 @@
 vm
 venv
 __pycache__
+database.db
