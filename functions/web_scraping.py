@@ -75,6 +75,7 @@ def return_data(artist):
 
 
 if __name__ == '__main__':
-    x = return_data('racionais mcs')
+    x = return_data('raul')
     if x:
-        print(x)
+        for item in x:
+            print(item)
