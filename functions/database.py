@@ -8,6 +8,7 @@ init(autoreset=True)
 
 class DataBase:
     def __init__(self):
+        """Em geral o init vai procurar criar o banco de dados"""
         # nome da base de dados
         self.name_file = 'database.db'
 
@@ -18,20 +19,21 @@ class DataBase:
                 conn = sqlite3.connect(self.name_file)
                 # cria um cursor
                 cursor = conn.cursor()
-                #  executa um script para criar uma tabela com duas colunas
+                # Cria a coluna artist
                 cursor.execute('''
                     CREATE TABLE IF NOT EXISTS artist( 
                         id integer primary key,
                         name text
                         );
                     ''')
+                # Cria acoluna lyrics, relacionando o artista
                 cursor.execute('''
                     CREATE TABLE IF NOT EXISTS lyrics(
                         id integer primary key,
                         name text,
                         lyric text,
-                        artist integer,
-                        FOREIGN KEY (artist) REFERENCES artist (artisti_id)
+                        id_artist integer,
+                        FOREIGN KEY (name) REFERENCES artist (id_artist)
                         );
                     ''')
                 # fecha conexão
@@ -44,6 +46,13 @@ class DataBase:
             else:
                 print(Fore.GREEN + '[!] Banco de dados Criado com sucesso!')
 
+    def search_artist(self, artist):
+        conn = sqlite3.connect(self.name_file)
+        cursor = conn.cursor()
+        cursor.execute(f"SELECT * FROM artist WHERE name = '{artist}'")
+        return cursor.fetchall()
+
 
 if __name__ == '__main__':
     DataBase()
+    # print(db.search_artist('Nirvana'))
