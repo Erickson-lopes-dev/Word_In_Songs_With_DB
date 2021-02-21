@@ -36,16 +36,19 @@ def searching_lyrics(artist):
 
         req_get = requests.get(link_lyric)
         soup_lyric = BeautifulSoup(req_get.content, 'html.parser')
-        print(item.text, link_lyric)
         lyric_no_format = soup_lyric.find(id='lyrics').contents
 
         lyric_format = []
 
         for teste in lyric_no_format:
             if str(teste) != '<br/>':
-                print(str(teste))
+                lyric_format.append(str(teste))
         print('\n')
+
+        print(item.text, link_lyric)
+        lyric_format = ' /-/ '.join(lyric_format)
+        print(lyric_format)
 
 
 if __name__ == '__main__':
-    searching_lyrics('raul')
+    searching_lyrics('nirvana')
