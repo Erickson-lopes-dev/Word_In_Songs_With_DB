@@ -57,7 +57,7 @@ def searching_lyrics(artist, id_artist):
         lyric_format = ' /-/ '.join(lyric_format)
 
         # Cria um item dentro da lista com o nome, letra da musica capsulando em um dicionario
-        return_data_lyric.append([item.text, link_lyric, lyric_format, id_artist])
+        return_data_lyric.append([item.text, lyric_format, link_lyric, id_artist])
     print()
     # retorna a lista com os dadoos de cada música
     return return_data_lyric

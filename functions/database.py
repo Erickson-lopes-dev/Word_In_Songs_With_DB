@@ -69,7 +69,7 @@ class DataBase:
     def add_lyrics(self, lyrics):
         conn = sqlite3.connect(self.name_file)
         cursor = conn.cursor()
-        sql = "INSERT INTO lyrics (name, lyric, id_artist) Values (?, ?, ?)"
+        sql = "INSERT INTO lyrics (name, lyric, link, id_artist) Values (?, ?, ?, ?)"
         cursor.executemany(sql, lyrics)
         conn.commit()
 
