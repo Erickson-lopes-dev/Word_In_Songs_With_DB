@@ -35,7 +35,7 @@ def searching_lyrics(list_lyrics):
     # varaivel que ira retornar os dados coletado
     return_data_lyric = []
 
-    for item in tqdm(list_lyrics, desc='Coletando Lyrics', bar_format=Fore.GREEN + "{l_bar} {bar} {r_bar}"):
+    for item in tqdm(list_lyrics, desc='Coletando Lyrics', bar_format=Fore.YELLOW + "{l_bar} {bar} {r_bar}"):
         # Cria o link para a música
         link_lyric = 'https://www.vagalume.com.br' + item.attrs['href']
         # realiza a requisição GET no link
@@ -76,6 +76,7 @@ def return_data(artist):
 
 if __name__ == '__main__':
     x = return_data('raul')
+    print(x)
     if x:
         for item in x:
             print(item)
