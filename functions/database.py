@@ -62,17 +62,21 @@ class DataBase:
             conn.commit()
             conn.close()
         except:
-            print(Fore.RED + '[!] Não foi possível Adicionar o artista ao banco de dados!')
+            print(Fore.RED + '[!] Não foi possível Adicionar o artista ao banco de dados!  \n')
         else:
-            print(Fore.GREEN + f"[!] '{artist}' Adicionado com sucesso ao banco de dados! ")
+            print(Fore.GREEN + f"[!] '{artist}' Adicionado com sucesso ao banco de dados!  \n")
 
     def add_lyrics(self, lyrics):
-        conn = sqlite3.connect(self.name_file)
-        cursor = conn.cursor()
-        sql = "INSERT INTO lyrics (name, lyric, link, id_artist) Values (?, ?, ?, ?)"
-        cursor.executemany(sql, lyrics)
-        conn.commit()
-
+        try:
+            conn = sqlite3.connect(self.name_file)
+            cursor = conn.cursor()
+            sql = "INSERT INTO lyrics (name, lyric, link, id_artist) Values (?, ?, ?, ?)"
+            cursor.executemany(sql, lyrics)
+            conn.commit()
+        except:
+            print(Fore.RED + '[!] Não foi possível Adicionar os lyrics ao banco de dados!  \n')
+        else:
+            print(Fore.GREEN + '[!] Lyrics adicionado com sucesso !\n')
 
 if __name__ == '__main__':
     db = DataBase()
