@@ -31,11 +31,11 @@ def main_artist_page(artist):
 
 
 # Função para capturar todas as letras das musicas
-def searching_lyrics(list_lyrics):
+def searching_lyrics(artist, id_artist):
     # varaivel que ira retornar os dados coletado
     return_data_lyric = []
 
-    for item in tqdm(list_lyrics, desc='Coletando Lyrics', bar_format=Fore.YELLOW + "{l_bar} {bar} {r_bar}"):
+    for item in tqdm(main_artist_page(artist), desc='Coletando Lyrics', bar_format=Fore.YELLOW + "{l_bar} {bar} {r_bar}"):
         # Cria o link para a música
         link_lyric = 'https://www.vagalume.com.br' + item.attrs['href']
         # realiza a requisição GET no link
@@ -56,27 +56,17 @@ def searching_lyrics(list_lyrics):
         # Concatena os itens dentro da lista (a cada estrofe irá conter esse '/-/' )
         lyric_format = ' /-/ '.join(lyric_format)
 
-        # Cria um item dentro da lista com o nome, link e letra da musica capsulando em um dicionario
-        return_data_lyric.append({'name': item.text, 'link': link_lyric, 'lyric': lyric_format})
+        # Cria um item dentro da lista com o nome, letra da musica capsulando em um dicionario
+        return_data_lyric.append([item.text, link_lyric, lyric_format, id_artist])
     print()
     # retorna a lista com os dadoos de cada música
     return return_data_lyric
 
 
-# Função Retorna a junção dos dados
-def return_data(artist):
-    page_main = main_artist_page(artist)
-    if page_main:
-        print(Fore.GREEN + f"[!] '{artist.capitalize()}' Encontrado !\n")
-        return {'artist': artist.capitalize(), 'lyrics': searching_lyrics(page_main)}
-    else:
-        print(Fore.RED + f"[!] '{artist.capitalize()}' não foi encontrado, Por favor tente outro vez!")
-        return []
-
-
 if __name__ == '__main__':
-    x = return_data('raul')
-    print(x)
-    if x:
-        for item in x:
-            print(item)
+    print(searching_lyrics('raul', 12))
+    # x = return_data('raul')
+    # print(x)
+    # if x:
+    #     for item in x:
+    #         print(item)

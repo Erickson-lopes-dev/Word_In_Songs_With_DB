@@ -32,6 +32,7 @@ class DataBase:
                         id integer primary key,
                         name text,
                         lyric text,
+                        link text,
                         id_artist integer,
                         FOREIGN KEY (id_artist) REFERENCES artist (name)
                         );
@@ -53,7 +54,24 @@ class DataBase:
         cursor.execute(f"SELECT * FROM artist WHERE name = '{artist.lower()}'")
         return cursor.fetchall()
 
-        # cursor.execute(f"INSERT INTO artist (name) VALUES ('{artist.lower()}')")
+    def add_artisct_db(self, artist):
+        try:
+            conn = sqlite3.connect(self.name_file)
+            cursor = conn.cursor()
+            cursor.execute(f"INSERT INTO artist (name) VALUES ('{artist.lower()}')")
+            conn.commit()
+            conn.close()
+        except:
+            print(Fore.RED + '[!] Não foi possível Adicionar o artista ao banco de dados!')
+        else:
+            print(Fore.GREEN + f"[!] '{artist}' Adicionado com sucesso ao banco de dados! ")
+
+    def add_lyrics(self, lyrics):
+        conn = sqlite3.connect(self.name_file)
+        cursor = conn.cursor()
+        sql = "INSERT INTO lyrics (name, lyric, id_artist) Values (?, ?, ?)"
+        cursor.executemany(sql, lyrics)
+        conn.commit()
 
 
 if __name__ == '__main__':
