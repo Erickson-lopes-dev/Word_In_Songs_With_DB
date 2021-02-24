@@ -1,6 +1,7 @@
 from functions.database import DataBase
 from functions.web_scraping import main_artist_page, searching_lyrics
 from colorama import Fore, init
+from prettytable import PrettyTable
 
 init(autoreset=True)
 # artist = input('Digite o artista/banda:').lower()
@@ -9,9 +10,20 @@ artist = 'roberto carlos'.lower()
 db = DataBase()
 
 
-print()
-for item in db.artist_all():
-    print(item[0], item[1].capitalize())
+def artist_all():
+    # Cria a tabela especificando passa as colunas
+    table = PrettyTable(['id', 'Artista/Banda'])
+    # alinha os itens da tabela a esquerda
+    table.align = 'l'
+    if db.artist_all():
+        [table.add_row([item[0], item[1].capitalize()]) for item in db.artist_all()]
+    else:
+        table.add_row([0, 'Nenhum item encontrado!'])
+    # exibe a tabela
+    print(table)
+
+
+artist_all()
 
 
 def insert_database(artist_search):
@@ -36,5 +48,3 @@ def insert_database(artist_search):
 
         else:
             print(Fore.RED + f"[!] Não foi possível encontrar por '{artist_search}', tente novamente! \n")
-
-
