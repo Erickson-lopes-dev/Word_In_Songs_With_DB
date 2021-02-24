@@ -47,6 +47,12 @@ class DataBase:
             else:
                 print(Fore.GREEN + '[!] Banco de dados Criado com sucesso!')
 
+    def artist_all(self):
+        conn = sqlite3.connect(self.name_file)
+        cursor = conn.cursor()
+        cursor.execute(f"SELECT * FROM artist ")
+        return cursor.fetchall()
+
     # Verifica se o nome do artista
     def search_artist_db(self, artist):
         conn = sqlite3.connect(self.name_file)
@@ -77,6 +83,7 @@ class DataBase:
             print(Fore.RED + '[!] Não foi possível Adicionar os lyrics ao banco de dados!  \n')
         else:
             print(Fore.GREEN + '[!] Lyrics adicionado com sucesso !\n')
+
 
 if __name__ == '__main__':
     db = DataBase()
